@@ -3,6 +3,7 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepairer = require('role.repairer');
+require('prototype.tower');
 
 module.exports.loop = function () {
     // check for memory entries of died creeps by iterating over Memory.creeps
@@ -61,7 +62,13 @@ module.exports.loop = function () {
 
     }
 
-
+	var towers = _.filter(Game.structures, s => s.structureType == STRUCTURE_TOWER);
+    // for each tower
+    for (let tower of towers) {
+        // run tower logic
+        tower.defend();
+	}
+	
     console.log("Total:" + numberOfCreeps);
     // console.log("harvester:" + numberOfHarvesters);
     // console.log("upgrader:" + numberOfupgraders);
@@ -74,7 +81,6 @@ module.exports.loop = function () {
     //var energy = Game.creeps['Blake'].pos.findInRange(             FIND_DROPPED_RESOURCES,             1         );
     if (numberOfCreeps < 20 || Game.spawns.Spawn1.room.energyAvailable == Game.spawns.Spawn1.room.energyCapacityAvailable) {
         if (numberOfHarvesters < (numberOfCreeps * percentageOfHarvesters / 100)) {
-            // try to spawn one
             name = Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], undefined,
                 { role: 'harvester', working: false, index: 0 });
             console.log("harvester");

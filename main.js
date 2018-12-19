@@ -3,6 +3,7 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepairer = require('role.repairer');
+var roleWallRepairer = require('role.rallrepairer');
 require('prototype.tower');
 
 module.exports.loop = function () {
@@ -17,26 +18,26 @@ module.exports.loop = function () {
     var percentageOfHarvesters = 50;
     var percentageOfrepairer = 10;
     var percentageOfUpgraders = 20;
-    var percentageOfBuilders = 20;
+	var percentageOfBuilders = 10;
+	var percentageOfWallrepairer = 10;
     var numberOfCreeps = _.sum(Game.creeps, (c) => c != undefined)
     var numberOfHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester');
     var numberOfupgraders = _.sum(Game.creeps, (c) => c.memory.role == 'upgrader');
     var numberOfbuilders = _.sum(Game.creeps, (c) => c.memory.role == 'builder');
-    var numberOfrepairer = _.sum(Game.creeps, (c) => c.memory.role == 'repairer');
+	var numberOfrepairer = _.sum(Game.creeps, (c) => c.memory.role == 'repairer');
+	var numberOfwallrepairer = _.sum(Game.creeps, (c) => c.memory.role == 'wallRepairer');
 
     var index = 0
     // for every creep name in Game.creeps
     for (let name in Game.creeps) {
         // get the creep object
-        var creep = Game.creeps[name];
+		var creep = Game.creeps[name];
+		creep.say( creep.memory.role);
         if (numberOfCreeps > 5) {
             switch (creep.memory.role) {
                 case 'harvester':
-
                     roleHarvester.run(creep);
-
                     //roleBuilder.run(creep, index);
-
                     break;
                 case 'upgrader':
                     //roleHarvester.run(creep, index);
@@ -50,6 +51,11 @@ module.exports.loop = function () {
                 case 'repairer':
                     //roleBuilder.run(creep, index);
                     roleRepairer.run(creep);
+                    //roleHarvester.run(creep, index);
+					break;
+					case 'wallRepairer':
+                    //roleBuilder.run(creep, index);
+                    roleWallRepairer.run(creep);
                     //roleHarvester.run(creep, index);
                     break;
             }
@@ -95,6 +101,11 @@ module.exports.loop = function () {
 
             name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, MOVE, MOVE, CARRY, CARRY, MOVE], undefined, { role: 'repairer', working: false, index: index % 2 });
             console.log("repairer");
+		}
+		else if (numberOfwallrepairer < (numberOfCreeps * percentageOfWallrepairer / 100)) {
+
+            name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, MOVE, CARRY, MOVE], undefined, { role: 'wallRepairer', working: false, index: index % 2 });
+            console.log("wallRepairer");
         }
         else {
             name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, MOVE], undefined,

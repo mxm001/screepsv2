@@ -1,71 +1,71 @@
 var roleBuilder = require('role.builder');
 
 module.exports = {
-    // a function to run the logic for this role
-    /** @param {Creep} creep */
-    run: function(creep) {
-        // if creep is trying to repair something but has no energy left
-        if (creep.memory.working == true && creep.carry.energy == 0) {
-            // switch state
-            creep.memory.working = false;
-        }
-        // if creep is harvesting energy but is full
-        else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
-            // switch state
-            creep.memory.working = true;
-        }
+	// a function to run the logic for this role
+	/** @param {Creep} creep */
+	run: function (creep) {
+		// if creep is trying to repair something but has no energy left
+		if (creep.memory.working == true && creep.carry.energy == 0) {
+			// switch state
+			creep.memory.working = false;
+		}
+		// if creep is harvesting energy but is full
+		else if (creep.memory.working == false && creep.carry.energy == creep.carryCapacity) {
+			// switch state
+			creep.memory.working = true;
+		}
 
-        // if creep is supposed to repair something
-        if (creep.memory.working == true) {
-            // find all walls in the room
-            var walls = creep.room.find(FIND_STRUCTURES, {
-                filter: (s) => s.structureType == STRUCTURE_WALL
-            });
+		// if creep is supposed to repair something
+		if (creep.memory.working == true) {
+			// find all walls in the room
+			var walls = creep.room.find(FIND_STRUCTURES, {
+				filter: (s) => s.structureType == STRUCTURE_WALL
+			});
 
-            var target = undefined;
+			var target = undefined;
 
-            // loop with increasing percentages
-            for (let percentage = 0.0001; percentage <= 1; percentage = percentage + 0.0001){
-                // find a wall with less than percentage hits
-                for (let wall of walls) {
-                    if (wall.hits / wall.hitsMax < percentage) {
-                        target = wall;
-                        break;
-                    }
-                }
+			// loop with increasing percentages
+			for (let percentage = 0.0001; percentage <= 1; percentage = percentage + 0.0001) {
+				// find a wall with less than percentage hits
+				for (let wall of walls) {
+					if (wall.hits / wall.hitsMax < percentage) {
+						target = wall;
+						break;
+					}
+				}
 
-                // if there is one
-                if (target != undefined) {
-                    // break the loop
-                    break;
-                }
-            }
+				// if there is one
+				if (target != undefined) {
+					// break the loop
+					break;
+				}
+			}
 
-            // if we find a wall that has to be repaired
-            if (target != undefined) {
-                // try to repair it, if not in range
-                if (creep.repair(target) == ERR_NOT_IN_RANGE) {
-                    // move towards it
-                    creep.moveTo(target);
-                }
-            }
-            // if we can't fine one
-            else {
-                // look for construction sites
-                roleBuilder.run(creep);
-            }
-        }
-        // if creep is supposed to get energy
-        else {
+			// if we find a wall that has to be repaired
+			if (target != undefined) {
+				// try to repair it, if not in range
+				if (creep.repair(target) == ERR_NOT_IN_RANGE) {
+					// move towards it
+					creep.moveTo(target);
+				}
+			}
+			// if we can't fine one
+			else {
+				// look for construction sites
+				roleBuilder.run(creep);
+			}
+		}
+		// if creep is supposed to get energy
+		else {
 			//creep.getenergy
-			let container=true;
-			let useSource=true;
+			let container = true;
+			let useSource = true;
 			// if the Creep should look for containers
 			if (useContainer) {
 				// find closest container
 				container = this.pos.findClosestByPath(FIND_STRUCTURES, {
 					filter: s => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) &&
-								 s.store[RESOURCE_ENERGY] > 0
+						s.store[RESOURCE_ENERGY] > 0
 				});
 				// if one was found
 				if (container != undefined) {
@@ -79,14 +79,15 @@ module.exports = {
 			// if no container was found and the Creep should look for Sources
 			if (container == undefined && useSource) {
 				// find closest source
-				var source = this.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
-	
+				var sources = creep.room.find(FIND_SOURCES);
+				var source = creep.pos.findClosestByPath(FIND_SOURCES_ACTIVE);
+
 				// try to harvest energy, if the source is not in range
-				if (this.harvest(source) == ERR_NOT_IN_RANGE) {
+				if (creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
 					// move towards it
-					this.moveTo(source);
+					creep.moveTo(sources[1]);
 				}
 			}
-        }
-    }
+		}
+	}
 };

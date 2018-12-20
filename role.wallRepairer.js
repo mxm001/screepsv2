@@ -63,16 +63,16 @@ module.exports = {
 			// if the Creep should look for containers
 			if (useContainer) {
 				// find closest container
-				container = this.pos.findClosestByPath(FIND_STRUCTURES, {
+				container = creep.pos.findClosestByPath(FIND_STRUCTURES, {
 					filter: s => (s.structureType == STRUCTURE_CONTAINER || s.structureType == STRUCTURE_STORAGE) &&
 						s.store[RESOURCE_ENERGY] > 0
 				});
 				// if one was found
 				if (container != undefined) {
 					// try to withdraw energy, if the container is not in range
-					if (this.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
+					if (creep.withdraw(container, RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
 						// move towards it
-						this.moveTo(container);
+						creep.moveTo(container);
 					}
 				}
 			}

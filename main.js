@@ -3,7 +3,7 @@ var roleHarvester = require('role.harvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepairer = require('role.repairer');
-var roleWallRepairer = require('role.rallrepairer');
+var roleWallRepairer = require('role.wallRepairer');
 require('prototype.tower');
 
 module.exports.loop = function () {
@@ -33,7 +33,7 @@ module.exports.loop = function () {
 		// get the creep object
 		var creep = Game.creeps[name];
 		creep.say(creep.memory.role);
-		if (numberOfCreeps > 5) {
+		if (numberOfCreeps > 20) {
 			switch (creep.memory.role) {
 				case 'harvester':
 					roleHarvester.run(creep);
@@ -85,9 +85,9 @@ module.exports.loop = function () {
 	//Game.spawns.Spawn1.room.energyAvailable
 	//Game.spawns.Spawn1.room.energyCapacityAvailable 
 	//var energy = Game.creeps['Blake'].pos.findInRange(             FIND_DROPPED_RESOURCES,             1         );
-	if (numberOfCreeps < 20 || Game.spawns.Spawn1.room.energyAvailable == Game.spawns.Spawn1.room.energyCapacityAvailable) {
+	if (numberOfCreeps < 20 ) {
 		if (numberOfHarvesters < (numberOfCreeps * percentageOfHarvesters / 100)) {
-			name = Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], undefined,
+			name = Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY,  CARRY, CARRY, MOVE, MOVE], undefined,
 				{ role: 'harvester', working: false, index: 0 });
 			console.log("harvester");
 		}

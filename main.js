@@ -4,6 +4,7 @@ var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var roleRepairer = require('role.repairer');
 var roleWallRepairer = require('role.wallRepairer');
+var roleMiner = require('role.miner');
 require('prototype.tower');
 
 module.exports.loop = function () {
@@ -15,7 +16,8 @@ module.exports.loop = function () {
 			delete Memory.creeps[name];
 		}
 	}
-	var percentageOfHarvesters = 50;
+	var percentageOfHarvesters = 25;
+	var percentageOfMiners = 25;
 	var percentageOfrepairer = 10;
 	var percentageOfUpgraders = 20;
 	var percentageOfBuilders = 10;
@@ -26,7 +28,7 @@ module.exports.loop = function () {
 	var numberOfbuilders = _.sum(Game.creeps, (c) => c.memory.role == 'builder');
 	var numberOfrepairer = _.sum(Game.creeps, (c) => c.memory.role == 'repairer');
 	var numberOfwallrepairer = _.sum(Game.creeps, (c) => c.memory.role == 'wallRepairer');
-
+	var numberOfMiners = _.sum(Game.creeps, (c) => c.memory.role == 'wallRepairer');
 	var index = 0
 	// for every creep name in Game.creeps
 	for (let name in Game.creeps) {
@@ -58,6 +60,11 @@ module.exports.loop = function () {
 					roleWallRepairer.run(creep);
 					//roleHarvester.run(creep, index);
 					break;
+					case 'miner':
+						//roleBuilder.run(creep, index);
+						roleMiner.run(creep);
+						//roleHarvester.run(creep, index);
+						break;
 			}
 		}
 		else {
@@ -87,7 +94,7 @@ module.exports.loop = function () {
 	//var energy = Game.creeps['Blake'].pos.findInRange(             FIND_DROPPED_RESOURCES,             1         );
 	if (numberOfCreeps < 20 ) {
 		if (numberOfHarvesters < (numberOfCreeps * percentageOfHarvesters / 100)) {
-			name = Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY,  CARRY, CARRY, MOVE, MOVE], undefined,
+			name = Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], undefined,
 				{ role: 'harvester', working: false, index: 0 });
 			console.log("harvester");
 		}
@@ -106,6 +113,12 @@ module.exports.loop = function () {
 
 			name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, MOVE, CARRY, MOVE], undefined, { role: 'wallRepairer', working: false, index: index % 2 });
 			console.log("wallRepairer");
+		}
+		else if (numberOfMiners < (numberOfCreeps * percentageOfMiners / 100)) {
+
+			name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, WORK, MOVE], undefined,
+				{ role: 'miner', working: false, index: 0 });
+			console.log("miner");
 		}
 		else {
 			name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, MOVE], undefined,

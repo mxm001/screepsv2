@@ -15,10 +15,10 @@ module.exports.loop = function () {
 			delete Memory.creeps[name];
 		}
 	}
-	var percentageOfHarvesters = 50;
+	var percentageOfHarvesters = 40;
 	var percentageOfrepairer = 10;
 	var percentageOfUpgraders = 20;
-	var percentageOfBuilders = 10;
+	var percentageOfBuilders = 20;
 	var percentageOfWallrepairer = 10;
 	var numberOfCreeps = _.sum(Game.creeps, (c) => c != undefined)
 	var numberOfHarvesters = _.sum(Game.creeps, (c) => c.memory.role == 'harvester');
@@ -33,7 +33,7 @@ module.exports.loop = function () {
 		// get the creep object
 		var creep = Game.creeps[name];
 		creep.say(creep.memory.role);
-		if (numberOfCreeps > 20) {
+		if (numberOfCreeps >15) {
 			switch (creep.memory.role) {
 				case 'harvester':
 					roleHarvester.run(creep);

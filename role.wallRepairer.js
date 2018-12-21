@@ -58,7 +58,7 @@ module.exports = {
 		// if creep is supposed to get energy
 		else {
 			//creep.getenergy
-			let container = true;
+			let useContainer = true;
 			let useSource = true;
 			// if the Creep should look for containers
 			if (useContainer) {

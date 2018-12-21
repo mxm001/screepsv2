@@ -95,6 +95,11 @@ module.exports.loop = function () {
 	//var energy = Game.creeps['Blake'].pos.findInRange(             FIND_DROPPED_RESOURCES,             1         );
 	if (numberOfCreeps < 20 ) {
 		if (numberOfHarvesters < (numberOfCreeps * percentageOfHarvesters / 100)) {
+			let movepiecesporc=40;
+			let workpiecesporc=20;
+			let carrypiecesporc=40;
+			
+			
 			name = Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], undefined,
 				{ role: 'harvester', working: false, index: 0 });
 			console.log("harvester");

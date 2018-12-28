@@ -17,8 +17,8 @@ module.exports.loop = function () {
 		}
 	}
 
-	var percentageOfHarvesters = 20;
-	var percentageOfMiners = 20;
+	var percentageOfHarvesters = 40;
+//	var percentageOfMiners = 20;
 	var percentageOfrepairer = 10;
 	var percentageOfUpgraders = 20;
 	var percentageOfBuilders = 20;
@@ -161,21 +161,29 @@ energy=Game.spawns.Spawn1.room.energyAvailable;
 			name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, MOVE, CARRY, MOVE], undefined, { role: 'wallRepairer', working: false, index: index % 2 });
 			console.log("wallRepairer");
 		}
-		else if (numberOfMiners < (numberOfCreeps * percentageOfMiners / 100)) {
+	//else if (numberOfMiners < (numberOfCreeps * percentageOfMiners / 100)) {
 
-			name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, WORK, MOVE], undefined,
-				{ role: 'miner', working: false, index: 0 });
-			console.log("miner");
-		}
+	//	name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, WORK, MOVE], undefined,
+	//		{ role: 'miner', working: false, index: 0 });
+	//	console.log("miner");
+	}
 		else {
-			name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, MOVE], undefined,
-				{ role: 'builder', working: false, index: 0 });
-			console.log("builder");
+			let movepiecesporc=40/100;
+			let workpiecesporc=20/100;
+			let carrypiecesporc=40/100;
+
+			bodyParts=[];
+			for (let index = 0; index < movepiecesporc*energy/moveVal; index++) {
+				bodyParts.push(WORK);
+				
+			}
+			name = Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], undefined,{ role: 'harvester', working: false, index: 0 });
+			console.log("harvester");
 		}
 
 
 		if (!(name < 0)) {
 			console.log("Spawned new creep: " + name);
 		}
-	}
+	
 };

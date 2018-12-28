@@ -18,7 +18,7 @@ module.exports.loop = function () {
 	}
 
 	var percentageOfHarvesters = 40;
-//	var percentageOfMiners = 20;
+	//	var percentageOfMiners = 20;
 	var percentageOfrepairer = 10;
 	var percentageOfUpgraders = 20;
 	var percentageOfBuilders = 20;
@@ -36,7 +36,7 @@ module.exports.loop = function () {
 		// get the creep object
 		var creep = Game.creeps[name];
 		creep.say(creep.memory.role);
-		if (numberOfCreeps >15) {
+		if (numberOfCreeps > 15) {
 			switch (creep.memory.role) {
 				case 'harvester':
 					roleHarvester.run(creep);
@@ -61,11 +61,11 @@ module.exports.loop = function () {
 					roleWallRepairer.run(creep);
 					//roleHarvester.run(creep, index);
 					break;
-					case 'miner':
-						//roleBuilder.run(creep, index);
-						roleMiner.run(creep);
-						//roleHarvester.run(creep, index);
-						break;
+				case 'miner':
+					//roleBuilder.run(creep, index);
+					roleMiner.run(creep);
+					//roleHarvester.run(creep, index);
+					break;
 			}
 		}
 		else {
@@ -121,35 +121,36 @@ Attacks a neutral room controller reservation timer by 1 tick per body parts.
 A creep with this body part will have a reduced life time of 600 ticks and cannot be renewed.
 
 TOUGH	10	No effect, just additional hit points to the creep's body. Can be boosted to resist damage.*/
-workVal=100;
-moveVal=50;
-carryVal=50;
-attackVal=80;
-rangedAttackVal=150;
-healVal=250;
-claimVal=600;
-toughVal=10;//Siempre usar al principio del array
-energia=Game.spawns.Spawn1.room.energyAvailable;
+	workVal = 100;
+	moveVal = 50;
+	carryVal = 50;
+	attackVal = 80;
+	rangedAttackVal = 150;
+	healVal = 250;
+	claimVal = 600;
+	toughVal = 10;//Siempre usar al principio del array
+	energia = Game.spawns.Spawn1.room.energyAvailable;
+	//energia=Game.spawns.Spawn1.room.energyCapacityAvailable;
 
-	if (numberOfCreeps > 20 ) {
+	if (numberOfCreeps > 20 && energia > Game.spawns.Spawn1.room.energyCapacityAvailable * 0.75) {
 		if (numberOfHarvesters < (numberOfCreeps * percentageOfHarvesters / 100)) {
-			let movepiecesporc=40/100;
-			let workpiecesporc=20/100;
-			let carrypiecesporc=40/100;
+			let movepiecesporc = 40 / 100;
+			let workpiecesporc = 20 / 100;
+			let carrypiecesporc = 40 / 100;
 
-			bodyParts=[];
-			for (let index = 0; index < Math.floor(workpiecesporc*energia/workVal); index++) {
+			bodyParts = [];
+			for (let index = 0; index < Math.floor(workpiecesporc * energia / workVal); index++) {
 				bodyParts.push(WORK);
 			}
-			
-			for (let index = 0; index < Math.floor(carrypiecesporc*energia/carryVal); index++) {
+
+			for (let index = 0; index < Math.floor(carrypiecesporc * energia / carryVal); index++) {
 				bodyParts.push(CARRY);
 			}
-			for (let index = 0; index < Math.floor(movepiecesporc*energia/moveVal); index++) {
+			for (let index = 0; index < Math.floor(movepiecesporc * energia / moveVal); index++) {
 				bodyParts.push(MOVE);
 			}
-			
-			name = Game.spawns.Spawn1.createCreep(bodyParts, undefined,{ role: 'harvester', working: false, index: 0 });
+
+			name = Game.spawns.Spawn1.createCreep(bodyParts, undefined, { role: 'harvester', working: false, index: 0 });
 			//console.log(name);
 			console.log("harvester");
 		}
@@ -169,35 +170,36 @@ energia=Game.spawns.Spawn1.room.energyAvailable;
 			name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, MOVE, CARRY, MOVE], undefined, { role: 'wallRepairer', working: false, index: index % 2 });
 			console.log("wallRepairer");
 		}
-	//else if (numberOfMiners < (numberOfCreeps * percentageOfMiners / 100)) {
+		//else if (numberOfMiners < (numberOfCreeps * percentageOfMiners / 100)) {
 
-	//	name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, WORK, MOVE], undefined,
-	//		{ role: 'miner', working: false, index: 0 });
-	//	console.log("miner");
+		//	name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, WORK, MOVE], undefined,
+		//		{ role: 'miner', working: false, index: 0 });
+		//	console.log("miner");
 	}
-		else {
-			let movepiecesporc=40/100;
-			let workpiecesporc=20/100;
-			let carrypiecesporc=40/100;
-//console.log("HOLA");
-				bodyParts=[];
-			for (let index = 0; index < Math.floor(workpiecesporc*energia/workVal); index++) {
+	else {
+		if (energia > Game.spawns.Spawn1.room.energyCapacityAvailable * 0.75) {
+			let movepiecesporc = 40 / 100;
+			let workpiecesporc = 20 / 100;
+			let carrypiecesporc = 40 / 100;
+			//console.log("HOLA");
+			bodyParts = [];
+			for (let index = 0; index < Math.floor(workpiecesporc * energia / workVal); index++) {
 				bodyParts.push(WORK);
 			}
-			
-			for (let index = 0; index < Math.floor(carrypiecesporc*energia/carryVal); index++) {
+
+			for (let index = 0; index < Math.floor(carrypiecesporc * energia / carryVal); index++) {
 				bodyParts.push(CARRY);
 			}
-			for (let index = 0; index < Math.floor(movepiecesporc*energia/moveVal); index++) {
+			for (let index = 0; index < Math.floor(movepiecesporc * energia / moveVal); index++) {
 				bodyParts.push(MOVE);
 			}
-			name = Game.spawns.Spawn1.createCreep(bodyParts, undefined,{ role: 'harvester', working: false, index: 0 });
+			name = Game.spawns.Spawn1.createCreep(bodyParts, undefined, { role: 'harvester', working: false, index: 0 });
 			console.log("harvester");
 		}
+	}
 
+	if (!(name < 0)) {
+		console.log("Spawned new creep: " + name);
+	}
 
-		if (!(name < 0)) {
-			console.log("Spawned new creep: " + name);
-		}
-	
 };

@@ -129,26 +129,28 @@ rangedAttackVal=150;
 healVal=250;
 claimVal=600;
 toughVal=10;//Siempre usar al principio del array
-energy=Game.spawns.Spawn1.room.energyAvailable;
+energia=Game.spawns.Spawn1.room.energyAvailable;
 
-	if (numberOfCreeps < 20 ) {
+	if (numberOfCreeps > 20 ) {
 		if (numberOfHarvesters < (numberOfCreeps * percentageOfHarvesters / 100)) {
 			let movepiecesporc=40/100;
 			let workpiecesporc=20/100;
 			let carrypiecesporc=40/100;
 
 			bodyParts=[];
-			for (let index = 0; index < workpiecesporc*energy/workVal; index++) {
+			for (let index = 0; index < Math.floor(workpiecesporc*energia/workVal); index++) {
 				bodyParts.push(WORK);
 			}
 			
-			for (let index = 0; index < carrypiecesporc*energy/carryVal; index++) {
+			for (let index = 0; index < Math.floor(carrypiecesporc*energia/carryVal); index++) {
 				bodyParts.push(CARRY);
 			}
-			for (let index = 0; index < movepiecesporc*energy/moveVal; index++) {
+			for (let index = 0; index < Math.floor(movepiecesporc*energia/moveVal); index++) {
 				bodyParts.push(MOVE);
 			}
+			
 			name = Game.spawns.Spawn1.createCreep(bodyParts, undefined,{ role: 'harvester', working: false, index: 0 });
+			//console.log(name);
 			console.log("harvester");
 		}
 		else if (numberOfupgraders < (numberOfCreeps * percentageOfUpgraders / 100)) {
@@ -177,11 +179,17 @@ energy=Game.spawns.Spawn1.room.energyAvailable;
 			let movepiecesporc=40/100;
 			let workpiecesporc=20/100;
 			let carrypiecesporc=40/100;
-
-			bodyParts=[];
-			for (let index = 0; index < movepiecesporc*energy/moveVal; index++) {
+//console.log("HOLA");
+				bodyParts=[];
+			for (let index = 0; index < Math.floor(workpiecesporc*energia/workVal); index++) {
 				bodyParts.push(WORK);
-				
+			}
+			
+			for (let index = 0; index < Math.floor(carrypiecesporc*energia/carryVal); index++) {
+				bodyParts.push(CARRY);
+			}
+			for (let index = 0; index < Math.floor(movepiecesporc*energia/moveVal); index++) {
+				bodyParts.push(MOVE);
 			}
 			name = Game.spawns.Spawn1.createCreep(bodyParts, undefined,{ role: 'harvester', working: false, index: 0 });
 			console.log("harvester");

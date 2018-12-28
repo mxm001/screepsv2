@@ -142,7 +142,7 @@ energy=Game.spawns.Spawn1.room.energyAvailable;
 				bodyParts.push(WORK);
 				
 			}
-			name = Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], undefined,{ role: 'harvester', working: false, index: 0 });
+			name = Game.spawns.Spawn1.createCreep(bodyParts, undefined,{ role: 'harvester', working: false, index: 0 });
 			console.log("harvester");
 		}
 		else if (numberOfupgraders < (numberOfCreeps * percentageOfUpgraders / 100)) {
@@ -177,7 +177,7 @@ energy=Game.spawns.Spawn1.room.energyAvailable;
 				bodyParts.push(WORK);
 				
 			}
-			name = Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], undefined,{ role: 'harvester', working: false, index: 0 });
+			name = Game.spawns.Spawn1.createCreep(bodyParts, undefined,{ role: 'harvester', working: false, index: 0 });
 			console.log("harvester");
 		}
 

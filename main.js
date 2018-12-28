@@ -17,8 +17,8 @@ module.exports.loop = function () {
 		}
 	}
 
-	var percentageOfHarvesters = 20;
-	var percentageOfMiners = 20;
+	var percentageOfHarvesters = 40;
+//	var percentageOfMiners = 20;
 	var percentageOfrepairer = 10;
 	var percentageOfUpgraders = 20;
 	var percentageOfBuilders = 20;
@@ -93,14 +93,14 @@ module.exports.loop = function () {
 	//Game.spawns.Spawn1.room.energyAvailable
 	//Game.spawns.Spawn1.room.energyCapacityAvailable 
 	//var energy = Game.creeps['Blake'].pos.findInRange(             FIND_DROPPED_RESOURCES,             1         );
-	if (numberOfCreeps < 20 ) {
+	//if (numberOfCreeps < 20 ) {
 		if (numberOfHarvesters < (numberOfCreeps * percentageOfHarvesters / 100)) {
 			let movepiecesporc=40;
 			let workpiecesporc=20;
 			let carrypiecesporc=40;
 			
 			
-			name = Game.spawns.Spawn1.createCreep([WORK, WORK, CARRY, CARRY, CARRY, CARRY, MOVE, MOVE, MOVE], undefined,
+			name = Game.spawns.Spawn1.createCreep([WORK, CARRY, CARRY, MOVE, MOVE], undefined,
 				{ role: 'harvester', working: false, index: 0 });
 			console.log("harvester");
 		}
@@ -120,12 +120,12 @@ module.exports.loop = function () {
 			name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, MOVE, CARRY, MOVE], undefined, { role: 'wallRepairer', working: false, index: index % 2 });
 			console.log("wallRepairer");
 		}
-		else if (numberOfMiners < (numberOfCreeps * percentageOfMiners / 100)) {
+	//else if (numberOfMiners < (numberOfCreeps * percentageOfMiners / 100)) {
 
-			name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, WORK, MOVE], undefined,
-				{ role: 'miner', working: false, index: 0 });
-			console.log("miner");
-		}
+	//	name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, WORK, MOVE], undefined,
+	//		{ role: 'miner', working: false, index: 0 });
+	//	console.log("miner");
+	//}
 		else {
 			name = Game.spawns.Spawn1.createCreep([WORK, WORK, WORK, WORK, CARRY, CARRY, MOVE], undefined,
 				{ role: 'builder', working: false, index: 0 });
@@ -136,5 +136,5 @@ module.exports.loop = function () {
 		if (!(name < 0)) {
 			console.log("Spawned new creep: " + name);
 		}
-	}
+	
 };

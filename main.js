@@ -138,9 +138,15 @@ energy=Game.spawns.Spawn1.room.energyAvailable;
 			let carrypiecesporc=40/100;
 
 			bodyParts=[];
-			for (let index = 0; index < movepiecesporc*energy/moveVal; index++) {
+			for (let index = 0; index < workpiecesporc*energy/workVal; index++) {
 				bodyParts.push(WORK);
-				
+			}
+			
+			for (let index = 0; index < carrypiecesporc*energy/carryVal; index++) {
+				bodyParts.push(CARRY);
+			}
+			for (let index = 0; index < movepiecesporc*energy/moveVal; index++) {
+				bodyParts.push(MOVE);
 			}
 			name = Game.spawns.Spawn1.createCreep(bodyParts, undefined,{ role: 'harvester', working: false, index: 0 });
 			console.log("harvester");

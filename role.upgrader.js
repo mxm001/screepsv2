@@ -56,20 +56,14 @@ module.exports = {
                 
                     // move towards it
                     if (/*index % 2*/creep.memory.index == 0) {
-                        if (creep.harvest(sources[0]) == ERR_NOT_IN_RANGE) {
-                            if (creep.moveTo(sources[0]) != 0) {
-                                creep.moveTo(sources[1]);
-                                creep.memory.index = 0;
-                            }
+                        if (creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
+                            creep.moveTo(sources[1]) != 0;
                         }
                     }
                     else {
                         if (creep.harvest(sources[1]) == ERR_NOT_IN_RANGE) {
 
-                            if (creep.moveTo(sources[1]) != 0) {
-                                creep.moveTo(sources[0]);
-                                creep.memory.index = 1;
-                            }
+                            creep.moveTo(sources[1]) != 0;
                         }
                     }
                 
